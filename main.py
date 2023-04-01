@@ -15,7 +15,7 @@ def shorten_link(headers, url):
                              json=body)
     print(type(url))
     print(response.raise_for_status())
-    return response.json()
+    return response.json()['id']
 
 
 def count_clicks(headers, short_link):
