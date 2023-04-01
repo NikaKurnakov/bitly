@@ -13,8 +13,6 @@ def shorten_link(headers, url):
     }
     response = requests.post("https://api-ssl.bitly.com/v4/shorten/",headers=headers,
                              json=body)
-    print(type(url))
-    print(response.raise_for_status())
     return response.json()['id']
 
 
