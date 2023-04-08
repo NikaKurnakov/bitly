@@ -23,15 +23,15 @@ def count_clicks(headers, short_link):
 
 
 def is_bitlink(headers, bitlink):
-    bitl = f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}"
-    response = requests.get(bitl,headers=headers)
+    bitlink_url = f"https://api-ssl.bitly.com/v4/bitlinks/{bitlink}"
+    response = requests.get(bitlink_url,headers=headers)
     return response.ok
 
 
 def main():
-    apikey_bitly = os.environ('APIKEY_BITLY')
+    bitly_apikey = os.environ['BITLY_APIKEY']
     headers = {
-    "Authorization": f"Bearer {apikey_bitly}",
+    "Authorization": f"Bearer {bitly_apikey}",
     }
     parser = argparse.ArgumentParser(
         description='Сокращает ссылки и выводит количество переходов по ней'
@@ -39,7 +39,6 @@ def main():
     parser.add_argument('link', help='Введите ссылку:')
     args = parser.parse_args()
     print(args.link)
-
     parse_link = urlparse(args.link)
     bitlink = f"{parse_link.netloc}{parse_link.path}"
     try:
@@ -50,7 +49,8 @@ def main():
     except requests.exceptions.HTTPError as error:
         print("неверная ссылка.", error)
 
+    load_dotenv()
+
 
 if __name__ == "__main__":
-    load_dotenv()
     main()
